@@ -1,63 +1,74 @@
 scope,country_name,class,n
 sahel,Burkina Faso,C1_borehole_handpump,459
 sahel,Burkina Faso,C2_borehole_mechanized,1
-sahel,Burkina Faso,C3_borehole_untyped,255
-sahel,Burkina Faso,other_water_point,92
+sahel,Burkina Faso,C2b_borehole_standpost,168
+sahel,Burkina Faso,C3_borehole_untyped,91
+sahel,Burkina Faso,other_water_point,88
 sahel,Chad,C1_borehole_handpump,16
 sahel,Chad,C2_borehole_mechanized,10
 sahel,Chad,other_water_point,19
 sahel,Gambia,C1_borehole_handpump,130
 sahel,Mali,C1_borehole_handpump,106
 sahel,Mali,C2_borehole_mechanized,616
-sahel,Mali,C3_borehole_untyped,1
-sahel,Mali,other_water_point,57
+sahel,Mali,C2b_borehole_standpost,52
+sahel,Mali,other_water_point,6
 sahel,Mauritania,C2_borehole_mechanized,7
 sahel,Mauritania,other_water_point,7
 sahel,Niger,C1_borehole_handpump,102
 sahel,Niger,C2_borehole_mechanized,1065
-sahel,Niger,C3_borehole_untyped,145
-sahel,Niger,other_water_point,53
-train_pool,Benin,C1_borehole_handpump,4126
-train_pool,Benin,C3_borehole_untyped,1423
-train_pool,Benin,other_water_point,3048
+sahel,Niger,C2b_borehole_standpost,45
+sahel,Niger,C3_borehole_untyped,115
+sahel,Niger,other_water_point,38
+train_pool,Benin,C1_borehole_handpump,4124
+train_pool,Benin,C2b_borehole_standpost,3349
+train_pool,Benin,C3_borehole_untyped,694
+train_pool,Benin,other_water_point,430
 train_pool,Burkina Faso,C1_borehole_handpump,459
 train_pool,Burkina Faso,C2_borehole_mechanized,1
-train_pool,Burkina Faso,C3_borehole_untyped,255
-train_pool,Burkina Faso,other_water_point,92
+train_pool,Burkina Faso,C2b_borehole_standpost,168
+train_pool,Burkina Faso,C3_borehole_untyped,91
+train_pool,Burkina Faso,other_water_point,88
 train_pool,Chad,C1_borehole_handpump,16
 train_pool,Chad,C2_borehole_mechanized,10
 train_pool,Chad,other_water_point,19
-train_pool,Ethiopia,C1_borehole_handpump,4124
+train_pool,Ethiopia,C1_borehole_handpump,5049
 train_pool,Ethiopia,C2_borehole_mechanized,284
-train_pool,Ethiopia,C3_borehole_untyped,3634
-train_pool,Ethiopia,other_water_point,4310
+train_pool,Ethiopia,C2b_borehole_standpost,83
+train_pool,Ethiopia,C3_borehole_untyped,451
+train_pool,Ethiopia,other_water_point,6418
 train_pool,Gambia,C1_borehole_handpump,130
 train_pool,Ghana,C1_borehole_handpump,197
 train_pool,Ghana,C2_borehole_mechanized,453
-train_pool,Ghana,C3_borehole_untyped,383
-train_pool,Ghana,other_water_point,165
-train_pool,Kenya,C1_borehole_handpump,1609
+train_pool,Ghana,C2b_borehole_standpost,293
+train_pool,Ghana,C3_borehole_untyped,97
+train_pool,Ghana,other_water_point,158
+train_pool,Kenya,C1_borehole_handpump,1895
 train_pool,Kenya,C2_borehole_mechanized,849
-train_pool,Kenya,C3_borehole_untyped,8201
-train_pool,Kenya,other_water_point,22215
+train_pool,Kenya,C2b_borehole_standpost,2038
+train_pool,Kenya,C3_borehole_untyped,3490
+train_pool,Kenya,other_water_point,24566
 train_pool,Malawi,C1_borehole_handpump,1928
 train_pool,Malawi,C2_borehole_mechanized,8
-train_pool,Malawi,other_water_point,20
+train_pool,Malawi,C2b_borehole_standpost,2
+train_pool,Malawi,other_water_point,18
 train_pool,Mali,C1_borehole_handpump,106
 train_pool,Mali,C2_borehole_mechanized,616
-train_pool,Mali,C3_borehole_untyped,1
-train_pool,Mali,other_water_point,57
+train_pool,Mali,C2b_borehole_standpost,52
+train_pool,Mali,other_water_point,6
 train_pool,Mauritania,C2_borehole_mechanized,7
 train_pool,Mauritania,other_water_point,7
 train_pool,Niger,C1_borehole_handpump,102
 train_pool,Niger,C2_borehole_mechanized,1065
-train_pool,Niger,C3_borehole_untyped,145
-train_pool,Niger,other_water_point,53
-train_pool,Nigeria,C1_borehole_handpump,57188
-train_pool,Nigeria,C2_borehole_mechanized,25067
-train_pool,Nigeria,C3_borehole_untyped,16012
-train_pool,Nigeria,other_water_point,5893
-train_pool,Uganda,C1_borehole_handpump,4017
+train_pool,Niger,C2b_borehole_standpost,45
+train_pool,Niger,C3_borehole_untyped,115
+train_pool,Niger,other_water_point,38
+train_pool,Nigeria,C1_borehole_handpump,57564
+train_pool,Nigeria,C2_borehole_mechanized,25068
+train_pool,Nigeria,C2b_borehole_standpost,18
+train_pool,Nigeria,C3_borehole_untyped,11314
+train_pool,Nigeria,other_water_point,11153
+train_pool,Uganda,C1_borehole_handpump,5684
 train_pool,Uganda,C2_borehole_mechanized,688
-train_pool,Uganda,C3_borehole_untyped,49564
-train_pool,Uganda,other_water_point,45330
+train_pool,Uganda,C2b_borehole_standpost,10848
+train_pool,Uganda,C3_borehole_untyped,32129
+train_pool,Uganda,other_water_point,50138

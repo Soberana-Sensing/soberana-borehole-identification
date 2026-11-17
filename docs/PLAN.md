@@ -21,6 +21,7 @@ stay separate through data prep, training and reporting.
 |----|-------|-------------------|------------------|
 | C1 | `borehole_handpump` | Concrete apron ~2-3 m, handpump ~0.5 m, often a small fence | Not separable. Malawi UAV study needed 30 cm WorldView-3 and still struggled on unprotected points (van den Homberg et al., 2020) |
 | C2 | `borehole_mechanized` | Pump house, fenced yard, solar array, generator pad, sometimes a water tower | Plausible. Compound and tower carry 3-10 m features |
+| C2b | `borehole_standpost` | `Poste d'Eau Autonome`, kiosk, borne fontaine, tap stand fed by a scheme | Plausible as a small stand or slab, often fenced. Kept separate from C2 because the signature is a tap structure, not a borehole head. Do not merge with `other_water_point`: in the Sahel these are the village supply points worth finding |
 | C3 | `borehole_untyped` | Borehole recorded, technology unrecorded; mix of C1 and C2 footprints | Bounded by C1 and C2 outcomes |
 | C4 | `borehole_fed_irrigation` | Dry-season green plot, NDVI anomaly, NDWI moisture signal, wet soil in Sentinel-1 | Most plausible. Area-level, not point-level. Bazzi et al. 2021 and Gao et al. 2018 map irrigated plots with Sentinel-1 and Sentinel-2 |
 | C5 | `background_negative` | Random points outside known water point buffers | Baseline class, must be sampled far from any water point |
@@ -33,8 +34,8 @@ boreholes, then from unlabeled space where a borehole is suspected.
 | Item | Detail | Date |
 |------|--------|------|
 | WPdx-Basic | Socrata `jfkt-jmqa`, 706,294 raw rows, 576,803 after bbox and coordinate cleaning | retrieval 2026-11-17 |
-| WPdx Sahel subset | 3,141 points: Burkina Faso 807, Niger 1,465, Mali 780, Gambia 130, Chad 45, Mauritania 14, Senegal 0 | report dates 2003-02-15 to 2022-03-04, median 2014-11-16 |
-| WPdx training pool | 263,877 points: Nigeria 123,160, Uganda 99,607, Ethiopia 12,352, Kenya 32,874, Benin 8,597, Malawi 1,956, Ghana 1,198, Burkina Faso 807, Mali 780, Niger 1,465 | report dates 1998-12-15 to 2024-12-01, median 2015-01-27 |
+| WPdx Sahel subset | 3,141 points: Niger 1,465, Burkina Faso 807, Mali 780, Gambia 130, Chad 45, Mauritania 14, Senegal 0. Class split: C1 813, C2 1,699, C2b 265, C3 206, other 158 | report dates 2003-02-15 to 2022-03-04, median 2014-11-16 |
+| WPdx training pool | 264,619 points. Class split: C1 77,254, C2 29,049, C2b 16,896, C3 48,381, other 93,039. Nigeria 125,117, Uganda 99,487, Kenya 32,838, Ethiopia 12,352, Benin 8,597, Malawi 1,956, Ghana 1,198, Burkina Faso 807, Mali 780, Niger 1,465 | report dates 1998-12-15 to 2024-12-01, median 2015-01-28 |
 | Senegal DGPRE PROGRES | >8,000 water points, on formal request | access not yet requested |
 | ANADS inventory | `SEN-DGPRE-EROH-2013-V1.0`, Kaolack, Kaffrine, Thiès | survey 2013, earlier round 2007 |
 | Papers | 7 PDFs in `docs/scientific-literature/`, text in `.extracted/` | retrieved 2026-11-17 |
@@ -47,9 +48,11 @@ Senegal has no WPdx records at all. Train on the label-rich dryland countries, v
 
 1. WPdx filtered to classes, de-duplicated on 5-decimal cells per class. Done, `scripts/wpdx_filter.py`.
 2. Sample positives per class, geographically clustered and split by region not by point. Point-level
-   splits leak: neighbouring points share the same imagery.
+   splits leak: neighbouring points share the same imagery. Measured on the 2026-11-17 export: 25.0%
+   of training-pool labels have another label within 50 m, so this is not optional.
 3. Sample C5 negatives: random points at least 500 m from any water point.
-4. Request DGPRE access and download the ANADS 2013 inventory.
+4. Request DGPRE access and download the ANADS 2013 inventory. Deferred: WPdx-only until the probe
+   verdict exists.
 
 Gate: at least 500 positives per class that has a chance (C2, C3, C4) plus matching negatives.
 

@@ -23,10 +23,13 @@ verdict per class rather than one number.
 
 Retrieval date for every row: 2026-11-17.
 
-- Water Point Data Exchange (WPdx-Basic, Socrata dataset `jfkt-jmqa`). 838,209 records globally.
-  Senegal has none. Sahel coverage is thin: Niger 1,388, Burkina Faso 957, Mali 819, Gambia 161,
-  Chad 125, Mauritania 21. Dense pools sit nearby in Nigeria (119,508), Ethiopia (31,185), Ghana
-  (21,928) and Benin (8,597), which makes them the training pool.
+- Water Point Data Exchange (WPdx-Basic, Socrata dataset `jfkt-jmqa`). 838,209 records globally at
+  the portfolio level; the 2026-11-17 export carries 706,294 rows, 576,803 usable after coordinate
+  cleaning. Senegal has none. Sahel subset: 3,141 points across Niger 1,465, Burkina Faso 807, Mali
+  780, Gambia 130, Chad 45, Mauritania 14. Training pool: 264,619 points, led by Nigeria 125,117,
+  Uganda 99,487, Kenya 32,838, Ethiopia 12,352, Benin 8,597.
+- Labels cluster hard: 25.0% of training-pool points have another label within 50 m, median nearest
+  neighbour 187 m. All train/test splits group by region, never by point.
 - Senegal DGPRE PROGRES database. More than 8,000 water points with coordinates, depth and yield.
   Access by formal request, not open download.
 - ANADS microdata catalog, study `SEN-DGPRE-EROH-2013-V1.0`. DGPRE water point inventory covering

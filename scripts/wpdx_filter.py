@@ -11,6 +11,7 @@ Class definitions live in docs/PLAN.md. Do not change them here alone.
 
 import re
 import sys
+import unicodedata
 from pathlib import Path
 
 import pandas as pd
@@ -30,10 +31,19 @@ KEEP = ["#source", "#lat_deg", "#lon_deg", "#report_date", "#status_id", "#water
         "#pay", "#status"]
 
 HAND_PUMP = re.compile(
-    r"hand[\s_-]*pump|afridev|india\s*(mark|mk)\s*(ii|2|iii|3)?|mark\s*(ii|2|3)|"
-    r"vergnet|\bpump\s*#?\s*6|pump_n_6|nira|bush\s*pump|blue\s*pump|foot[\s_-]*pump|"
-    r"lever\s*pump|rope\s*pump|volanta|petite\s*pompe|pompe\s*à\s*motricité\s*humaine|"
-    r"pompe\s*a\s*motricite\s*humaine|mono\s*pump|tara\s*pump|sweet\s*water",
+    r"hand\s*pump|afridev|afridive|afrideve|aferdive|india\s*(mark|mk)\s*(ii|2|iii|3)?|"
+    r"mark\s*(ii|2|3)\b|vergnet|\bpump\s*#?\s*6\b|pump_n_6|nira|bush\s*pump|"
+    r"blue\s*pump|foot\s*pump|lever\s*pump|rope\s*pump|volanta|petite\s*pompe|"
+    r"pompe\s*a\s*motricite\s*humaine|mono\s*pump|tara\s*pump|sweet\s*water|"
+    r"super\s*mono|n\s*6\b",
+    re.I)
+# Tap stands and water posts. Fed by a scheme, so the surface signature is a stand,
+# not a borehole head. Kept as its own class: PEA and kiosks are the village supply
+# points we care about in the Sahel.
+STANDPOST = re.compile(
+    r"poste[s]?\s*d'?\s*eaux?\s*autonome[s]?|\bpea\b|kiosk|kiosque|borne\s*fontaine|"
+    r"stand\s*post|stand\s*pipe|standpipe|public\s*tap|tap\s*stand|tapstand|"
+    r"water\s*kiosk|fontainier|yard\s*tap|household\s*connection",
     re.I)
 MECHANIZED = re.compile(
     r"motoris|motoriz|electrical|electric|submersible|solar|mechani[sz]ed|diesel|"
@@ -41,19 +51,45 @@ MECHANIZED = re.compile(
     re.I)
 BOREHOLE = re.compile(r"bore\s*hole|bor[eé]hole|tube\s*well|tubewell|forage|"
                       r"mechanized\s*borehole|non-mechanized\s*borehole", re.I)
+# Dug wells and céanes are a different surface signature from a drilled borehole.
+WELL = re.compile(r"\bwell\b|\bceane\b|c[ée]ane|puits", re.I)
+
+_IDENT = re.compile(r"[\s_\-/,.()]+")
 
 
-def classify(source: str, tech: str) -> str:
-    """Return one of the four label classes, or 'other_water_point'."""
-    s = str(source).strip() if isinstance(source, str) else ""
-    t = str(tech).strip() if isinstance(tech, str) else ""
-    is_bore = bool(BOREHOLE.search(s)) or bool(BOREHOLE.search(t))
-    if HAND_PUMP.search(t):
+def norm(value) -> str:
+    """Lowercase, fold accents and collapse separators.
+
+    WPdx free text mixes underscores, hyphens, accents and stray punctuation across
+    surveys. `Pompe à motricité humaine` and `Pompe a motricite humaine` are the same
+    handpump and must match the same pattern; `India_Mark_II` and `india mark ii` too.
+    """
+    if not isinstance(value, str):
+        return ""
+    folded = unicodedata.normalize("NFKD", value)
+    folded = "".join(ch for ch in folded if not unicodedata.combining(ch))
+    return _IDENT.sub(" ", folded.lower()).strip()
+
+
+def classify(source, tech) -> str:
+    """Return one of the five label classes."""
+    s = norm(source)
+    t = norm(tech)
+    both = f"{s} {t}"
+    if HAND_PUMP.search(both):
         return "C1_borehole_handpump"
-    if MECHANIZED.search(t) or MECHANIZED.search(s):
-        return "C2_borehole_mechanized" if is_bore else "other_water_point"
-    if is_bore or re.search(r"\bwell\b", s, re.I):
+    if STANDPOST.search(t) or STANDPOST.search(s):
+        return "C2b_borehole_standpost"
+    # A bare "gravity" tech is a gravity-fed scheme: tap stands piped from a source
+    # uphill, no borehole head at the point unless the text says so.
+    if t.startswith("gravity") and not BOREHOLE.search(both):
+        return "other_water_point"
+    if MECHANIZED.search(both):
+        return "C2_borehole_mechanized" if BOREHOLE.search(both) else "other_water_point"
+    if BOREHOLE.search(both):
         return "C3_borehole_untyped"
+    if WELL.search(s):
+        return "other_water_point"
     return "other_water_point"
 
 
