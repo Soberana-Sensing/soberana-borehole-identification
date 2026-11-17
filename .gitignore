@@ -5,6 +5,8 @@ data/**
 !data/raw/README.md
 !data/interim/
 !data/interim/README.md
+# Class counts are small, hand-checkable, and cite the filter rules in docs/PLAN.md
+!data/interim/wpdx_summary.csv
 !data/derived/
 !data/derived/README.md
 
