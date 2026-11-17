@@ -1,0 +1,34 @@
+# Data: large and reproducible from scripts. Keep folders and READMEs.
+data/**
+!data/README.md
+!data/raw/
+!data/raw/README.md
+!data/interim/
+!data/interim/README.md
+!data/derived/
+!data/derived/README.md
+
+# Python
+.venv/
+soberana-borehole-identification-venv/
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+
+# Editors and OS
+.idea/
+.DS_Store
+
+# Secrets
+.env
+.env.*
+
+# Session scratch
+chat.txt
+
+# Scientific literature: PDFs stay local
+docs/scientific-literature/*
+!docs/scientific-literature/README.md
